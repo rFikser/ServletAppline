@@ -40,13 +40,12 @@ public class ServletUpdate extends HttpServlet {
             System.out.println("Error");
         }
 
-        JsonObject jsonObject = (JsonObject) this.gson.fromJson(String.valueOf(jb), JsonObject.class);
         request.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        int id = jsonObject.get("id").getAsInt();
-        String name = jsonObject.get("name").getAsString();
-        String surname = jsonObject.get("surname").getAsString();
-        double salary = jsonObject.get("salary").getAsDouble();
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        double salary = Double.parseDouble(request.getParameter("salary"));
         response.setContentType("application/json;charset=utf-8");
         if (id > 0) {
             if (id > this.model.getFromList().size()) {

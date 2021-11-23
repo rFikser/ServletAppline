@@ -31,21 +31,21 @@ public class ServletList extends HttpServlet {
             System.out.println("Error");
         }
 
-        JsonObject jsonObject = this.gson.fromJson(String.valueOf(jb), JsonObject.class);
+       // JsonObject jsonObject = gson.fromJson(String.valueOf(jb), JsonObject.class);
         request.setCharacterEncoding("UTF-8");
-        int id = jsonObject.get("id").getAsInt();
+        int id = Integer.parseInt(request.getParameter("id"));
         response.setContentType("application/json;charset=utf-8");
         PrintWriter pw = response.getWriter();
         if (id == 0) {
-            pw.print(this.gson.toJson(this.model.getFromList()));
+            pw.print(gson.toJson(model.getFromList()));
         } else if (id > 0) {
-            if (id > this.model.getFromList().size()) {
-                pw.print(this.gson.toJson("Такого пользователя нет"));
+            if (id > model.getFromList().size()) {
+                pw.print(gson.toJson("Такого пользователя нет"));
             } else {
-                pw.print(this.gson.toJson(this.model.getFromList().get(id)));
+                pw.print(gson.toJson(model.getFromList().get(id)));
             }
         } else {
-            pw.print(this.gson.toJson("ID должен быть больше нуля"));
+            pw.print(gson.toJson("ID должен быть больше нуля"));
         }
 
     }

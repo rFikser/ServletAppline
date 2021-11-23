@@ -42,7 +42,7 @@ public class ServletAdd extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-        resp.setContentType("application/json;charset=utf-8");
+
         req.setCharacterEncoding("UTF-8");
 
         StringBuffer jb = new StringBuffer();
@@ -57,17 +57,14 @@ public class ServletAdd extends HttpServlet {
             System.out.println("Error");
         }
 
-        JsonObject jobj = gson.fromJson(String.valueOf(jb), JsonObject.class);
-
-
-        String name = jobj.get("name").getAsString();
-        String surname = jobj.get("surname").getAsString();
-        double salary = jobj.get("salary").getAsDouble();
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        double salary = Double.parseDouble(req.getParameter("salary"));
 
         User user = new User(name, surname, salary);
         model.add(user, counter.getAndIncrement());
 
-
+        resp.setContentType("application/json;charset=utf-8");
         PrintWriter pw = resp.getWriter();
         pw.print(gson.toJson(model.getFromList()));
 
